@@ -1,0 +1,57 @@
+[Writable]
+LogLevel = 'DEBUG'
+
+[Service]
+Host = '172.17.0.1'
+Port = 49986
+ConnectRetries = 20
+Labels = []
+OpenMsg = "REST device started"
+Timeout = 5000
+EnableAsyncReadings = true
+AsyncBufferSize = 16
+
+[Registry]
+Host = '172.17.0.1'
+Port = 8500
+Type = "consul"
+CheckInterval = "10s"
+FailLimit = 3
+FailWaitTime = 10
+
+[Clients]
+  [Clients.Data]
+  Protocol = "http"
+  Host = '172.17.0.1'
+  Port = 48080
+  Timeout = 5000
+
+  [Clients.Metadata]
+  Protocol = "http"
+  Host = '172.17.0.1'
+  Port = 48081
+  Timeout = 5000
+
+  [Clients.Logging]
+  Protocol = "http"
+  Host = '172.17.0.1'
+  Port = 48061
+
+[Device]
+DataTransform = true
+InitCmd = ""
+InitCmdArgs = ""
+MaxCmdOps = 128
+MaxCmdValueLen = 256
+RemoveCmd = ""
+RemoveCmdArgs = ""
+ProfilesDir = "./res"
+
+# Pre-define Devices
+[[DeviceList]]
+  Name = "datastorage"
+  Profile = "datastorage"
+  Description = "RESTful Device"
+  Labels = [ "rest", "json", "numeric", "float", "int" ]
+  [DeviceList.Protocols]
+    [DeviceList.Protocols.other]

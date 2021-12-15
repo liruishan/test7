@@ -1,0 +1,48 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.dylib
+*.o
+bin/*
+pkg/*
+doc/generate-api/*
+vendor/
+go.sum
+.config*
+Dockerfile
+
+# Sample binary
+libedge-orchestration/lib/*
+libedge-orchestration/sample/output/*
+internal/controller/scoringmgr/mock_internal/myscoring/libmyscoring.so*
+internal/controller/scoringmgr/mock_internal/myscoring2/libmyscoring2.so*
+
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of build
+*.o
+
+# examples for native
+examples/native/edge-orchestration
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+coverage.html
+internal/controller/discoverymgr/testDB/*
+internal/controller/storagemgr/storagedriver/tests.log
+
+# Certificates
+cert/
+
+# VS Code
+.vscode/
+
+# Eclipse
+.project
+.cproject
+
+# GoLand
+.idea

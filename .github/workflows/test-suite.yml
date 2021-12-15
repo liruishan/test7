@@ -1,0 +1,29 @@
+name: Test Suite
+on: [push, pull_request]
+
+jobs:
+  test-suite:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Golang
+        uses: actions/setup-go@v1
+        with:
+          go-version: '1.16.6'
+
+      - name: Set env vars (gocov)
+        run: |
+          go get github.com/axw/gocov/gocov
+          echo "$HOME/go/bin" >> $GITHUB_PATH
+          sudo mkdir -p /var/edge-orchestration/mnedc
+          echo -e 'server-ip: 192.168.0.125\nport: 3334' | sudo tee /var/edge-orchestration/mnedc/client-config.yaml
+
+      - name: Run the Test Suite
+        run: |
+          GO111MODULE=on go mod vendor
+          gocov test $(go list ./internal/... | grep -v mock) -coverprofile=/dev/null
